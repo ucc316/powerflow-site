@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Power Flow Map (MVP)</title>
+  <title>Power Flow Map</title>
   <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet"/>
   <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
   <style>
-    body { margin:0; font-family: system-ui, Arial, sans-serif; }
-    #topbar { padding:10px 14px; border-bottom:1px solid #eee; display:flex; gap:18px; align-items:center }
-    #map { width:100vw; height: calc(100vh - 52px); }
-    .badge{display:inline-block;padding:.15rem .5rem;border-radius:.5rem;background:#f2f2f2}
-    .legend{display:flex;gap:12px;align-items:center}
+    body { margin:0; font-family:system-ui,Arial,sans-serif }
+    #topbar{display:flex;gap:16px;align-items:center;padding:10px 14px;border-bottom:1px solid #eee}
+    .badge{display:inline-block;padding:.2rem .5rem;border-radius:.5rem;background:#f2f2f2}
+    #map{width:100vw;height:calc(100vh - 52px)}
+    .legend{display:flex;gap:10px;align-items:center}
     .sw{width:18px;height:6px;border-radius:3px;display:inline-block}
   </style>
 </head>
@@ -24,13 +24,14 @@
       <span class="sw" style="background:#2ecc71"></span><small>低</small>
       <span class="sw" style="background:#f1c40f"></span><small>中</small>
       <span class="sw" style="background:#f39c12"></span><small>高</small>
-      <span class="sw" style="background:#e74c3c"></span><small>過負荷(>100%)</small>
+      <span class="sw" style="background:#e74c3c"></span><small> >100%</small>
     </div>
   </div>
   <div id="map"></div>
 
   <script>
-    const MAP_STYLE = "https://demotiles.maplibre.org/style.json"; // デモ用
+    // ====== 設定 ======
+    const MAP_STYLE   = "https://demotiles.maplibre.org/style.json"; // デモ用スタイル
     const GEOJSON_URL = "/geometry/lines.geojson";
     const DATA_URL    = "/data/latest.json";
 
@@ -39,128 +40,130 @@
     const LAYER_FLOW  = "grid-flow";
     const LAYER_ARROW = "grid-arrows";
 
-    // util→色
+    // util(0-1) → 色
     const utilColor = [
       "case",
-      [">", ["feature-state", "util"], 1], "#e74c3c", // 100%超
-      ["interpolate", ["linear"], ["feature-state", "util"],
-        0,   "#2ecc71",
-        0.5, "#f1c40f",
-        0.8, "#f39c12",
-        1.0, "#e67e22"
+      [">", ["feature-state","util"], 1], "#e74c3c",
+      ["interpolate", ["linear"], ["feature-state","util"],
+        0, "#2ecc71", 0.5, "#f1c40f", 0.8, "#f39c12", 1.0, "#e67e22"
       ]
     ];
-
-    // capacity→太さ(px)
-    const widthByCap = ["interpolate", ["linear"], ["to-number", ["get", "capacity_mw"]],
+    // capacity(MW) → 太さ(px)
+    const widthByCap = ["interpolate", ["linear"], ["to-number", ["get","capacity_mw"]],
       300, 2, 600, 4, 1200, 8, 2000, 10
     ];
-
-    // ダッシュアニメ（ant path 風）
-    const dashSeq = [
-      [0, 4, 3, 2],
-      [1, 4, 2, 2],
-      [2, 4, 1, 2],
-      [3, 4, 0, 2]
-    ];
-
-    let map, featuresIndex = {}; // lineId -> true
+    // ダッシュアニメ（ant path風）
+    const dashSeq = [[0,4,3,2],[1,4,2,2],[2,4,1,2],[3,4,0,2]];
     let dashStep = 0;
 
-    init();
+    // ====== 地図初期化 ======
+    const map = new maplibregl.Map({
+      container: "map",
+      style: MAP_STYLE,
+      center: [139.75, 35.68], // 仮：関東付近
+      zoom: 7
+    });
+    map.addControl(new maplibregl.NavigationControl(), "top-right");
 
-    async function init() {
-      // 1) まず地図を起動
-      map = new maplibregl.Map({
-        container: "map",
-        style: MAP_STYLE,
-        center: [139.75, 35.68], // 仮：首都圏付近
-        zoom: 7
-      });
+    const featuresIndex = {}; // lineId の存在チェック用
 
-      map.on("load", async () => {
-        // 2) GeoJSON 読み込み & ソース追加（promoteId: 'lineId' で feature-state の id にlineIdを使える）
-        const geo = await (await fetch(GEOJSON_URL, {cache:"no-store"})).json();
-        geo.features.forEach(f => { featuresIndex[f.properties.lineId] = true; });
+    // ====== ここからご指定のブロック（+補助関数を下に定義） ======
+<script>
+  // 事前にこの定数はそのまま: MAP_STYLE, GEOJSON_URL, DATA_URL, SOURCE_ID, LAYER_BASE, LAYER_FLOW, LAYER_ARROW
+  // そして utilColor / widthByCap / dashSeq / dashStep / map / featuresIndex も既にある前提
 
-        map.addSource(SOURCE_ID, {
-          type: "geojson",
-          data: geo,
-          promoteId: "lineId"
-        });
+  // ① GeoJSONの読み込み→ソース追加→範囲に自動ズーム→ベース線だけまず描画
+  map.on("load", async () => {
+    try {
+      const res = await fetch(GEOJSON_URL + "?cb=" + Date.now(), { cache: "no-store" });
+      if (!res.ok) throw new Error(`GeoJSON HTTP ${res.status}`);
+      const geo = await res.json();
 
-        // ベース（薄いグレー、下地）
-        map.addLayer({
-          id: LAYER_BASE, type: "line", source: SOURCE_ID,
-          paint: {
-            "line-color": "#bdc3c7",
-            "line-width": widthByCap,
-            "line-opacity": 0.6
-          }
-        });
-
-        // 流れ（色・太さ・ダッシュ）
-        map.addLayer({
-          id: LAYER_FLOW, type: "line", source: SOURCE_ID,
-          paint: {
-            "line-color": utilColor,
-            "line-width": widthByCap,
-            "line-opacity": 0.95,
-            "line-dasharray": dashSeq[dashStep],
-            "line-cap": "round",
-            "line-join": "round"
-          }
-        });
-
-        // 矢印（方向：dir<0 で ◀、>=0 で ▶ をline上に繰り返し）
-        map.addLayer({
-          id: LAYER_ARROW, type: "symbol", source: SOURCE_ID,
-          layout: {
-            "symbol-placement": "line",
-            "text-field": ["case", ["<", ["feature-state","dir"], 0], "◀", "▶"],
-            "text-size": 14,
-            "symbol-spacing": 80,
-            "text-keep-upright": false
-          },
-          paint: { "text-color": utilColor, "text-opacity": 0.9 }
-        });
-
-        // 3) 最初のデータ適用 & 以後は1分おきに更新
-        await applyLatest();
-        setInterval(applyLatest, 60 * 1000);
-
-        // 4) ダッシュアニメ開始
-        animateDash();
-      });
-    }
-
-    async function applyLatest() {
-      const res = await fetch(DATA_URL + "?cb=" + Date.now(), { cache: "no-store" });
-      if (!res.ok) { console.error("failed to load latest.json"); return; }
-      const data = await res.json();
-
-      // UI
-      document.getElementById("ts").textContent = data.ts || "(不明)";
-
-      // 状態反映
-      let maxUtil = 0;
-      const byId = {};
-      (data.lines || []).forEach(r => { byId[r.lineId] = r; });
-
-      for (const id in featuresIndex) {
-        const f = byId[id];
-        if (!f) continue;
-        maxUtil = Math.max(maxUtil, f.util || 0);
-        map.setFeatureState({ source: SOURCE_ID, id }, { util: f.util || 0, dir: f.dir || 1 });
+      if (!geo || !Array.isArray(geo.features) || geo.features.length === 0) {
+        throw new Error("Feature が空です");
       }
-      document.getElementById("max").textContent = (maxUtil * 100).toFixed(1) + "%";
-    }
+      // lineId の存在チェック（表示には必須ではないが後の feature-state に必要）
+      geo.features.forEach(f => {
+        if (f?.properties?.lineId) featuresIndex[f.properties.lineId] = true;
+      });
 
-    function animateDash() {
-      dashStep = (dashStep + 1) % dashSeq.length;
-      map.setPaintProperty(LAYER_FLOW, "line-dasharray", dashSeq[dashStep]);
-      requestAnimationFrame(animateDash);
+      map.addSource(SOURCE_ID, {
+        type: "geojson",
+        data: geo,
+        promoteId: "lineId" // lineId が無い要素があっても描画はされます
+      });
+
+      // まず「絶対に見える」ようにベース線だけ表示
+      map.addLayer({
+        id: LAYER_BASE, type: "line", source: SOURCE_ID,
+        paint: { "line-color": "#666", "line-width": 3, "line-opacity": 0.9 }
+      });
+
+      // ② 画面外にある可能性に備えて全体にフィット
+      const bounds = bboxOfLines(geo);
+      if (bounds) map.fitBounds(bounds, { padding: 40, duration: 0 });
+
+      // ③ 本番用の色分けレイヤ & 矢印を追加
+      map.addLayer({
+        id: LAYER_FLOW, type: "line", source: SOURCE_ID,
+        paint: {
+          "line-color": utilColor,
+          "line-width": widthByCap,
+          "line-opacity": 0.95,
+          "line-dasharray": dashSeq[dashStep],
+          "line-cap": "round", "line-join": "round"
+        }
+      });
+
+      map.addLayer({
+        id: LAYER_ARROW, type: "symbol", source: SOURCE_ID,
+        layout: {
+          "symbol-placement": "line",
+          "text-field": ["case", ["<", ["feature-state","dir"], 0], "◀", "▶"],
+          "text-size": 14, "symbol-spacing": 80, "text-keep-upright": false
+        },
+        paint: { "text-color": utilColor, "text-opacity": 0.9 }
+      });
+
+      // ④ データを反映 & アニメ開始
+      await applyLatest();
+      setInterval(applyLatest, 60 * 1000);
+      animateDash();
+      console.log("GeoJSON loaded. features:", geo.features.length);
+
+    } catch (err) {
+      console.error("GeoJSON 読み込みエラー:", err);
+      alert("GeoJSON を読み込めませんでした: " + err.message +
+            "\n/geometry/lines.geojson をブラウザで直接開けるか確認してください。");
     }
-  </script>
+  });
+
+  // GeoJSON(LineString/MultiLineString)のバウンディングボックスを返す
+  function bboxOfLines(fc) {
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for (const f of fc.features) {
+      const g = f.geometry;
+      if (!g) continue;
+      if (g.type === "LineString") {
+        for (const c of g.coordinates) {
+          const [x,y] = c; // 必ず [経度, 緯度]！
+          if (x<minX) minX=x; if (y<minY) minY=y;
+          if (x>maxX) maxX=x; if (y>maxY) maxY=y;
+        }
+      } else if (g.type === "MultiLineString") {
+        for (const line of g.coordinates) {
+          for (const c of line) {
+            const [x,y] = c;
+            if (x<minX) minX=x; if (y<minY) minY=y;
+            if (x>maxX) maxX=x; if (y>maxY) maxY=y;
+          }
+        }
+      }
+    }
+    if (!isFinite(minX)) return null;
+    return [[minX, minY], [maxX, maxY]];
+  }
+</script>
+
 </body>
 </html>
