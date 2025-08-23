@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "lineId": "K1-SubA-SubB", "capacity_mw": 1200 },
+      "geometry": { "type": "LineString", "coordinates": [[139.70,35.72],[139.80,35.66]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "lineId": "K2-SubC-SubD", "capacity_mw": 400 },
+      "geometry": { "type": "LineString", "coordinates": [[139.75,35.80],[139.62,35.62]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "lineId": "K3-SubE-SubF", "capacity_mw": 600 },
+      "geometry": { "type": "LineString", "coordinates": [[139.90,35.70],[139.76,35.56]] }
+    }
+  ]
+}
