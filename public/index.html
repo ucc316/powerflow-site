@@ -1,6 +1,80 @@
 <!doctype html>
-<html lang="ja"><meta charset="utf-8">
-<title>Firebase Hosting Test</title>
-<h1>Hello Firebase Hosting!</h1>
-<p>このページは無料プランで公開中。</p>
-<!-- test -->
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Power Flow (MVP)</title>
+  <style>
+    body{font-family:system-ui,Arial,sans-serif;margin:24px}
+    .muted{color:#666}
+    .badge{display:inline-block;padding:.2rem .5rem;border-radius:.5rem;background:#f1f1f1}
+    table{border-collapse:collapse;width:100%;max-width:920px;margin-top:12px}
+    th,td{border:1px solid #ddd;padding:.5rem;text-align:right}
+    th:first-child,td:first-child{text-align:left}
+    tr:nth-child(even){background:#fafafa}
+    .warn{color:#c00;font-weight:600}
+  </style>
+</head>
+<body>
+  <h1>送電線の最新データ</h1>
+  <p class="muted">ソース: <code>/data/latest.json</code>（1分ごと自動更新）</p>
+  <p>更新時刻: <span id="ts" class="badge">読み込み中...</span></p>
+  <p>
+    ライン本数: <strong id="count">-</strong> /
+    最大使用率: <strong id="max">-</strong>
+  </p>
+
+  <table id="tbl">
+    <thead>
+      <tr>
+        <th>lineId</th><th>P (MW)</th><th>Capacity (MW)</th><th>Util (%)</th><th>Dir</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function load() {
+      // no-store でキャッシュを回避。さらにcache-busterを付ける
+      const url = `/data/latest.json?cb=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("JSONの取得に失敗: " + res.status);
+      const data = await res.json();
+
+      // ヘッダ表示
+      document.getElementById("ts").textContent = data.ts ?? "(不明)";
+      const lines = Array.isArray(data.lines) ? data.lines : [];
+
+      // 使用率の高い順に並べ替え
+      lines.sort((a,b) => (b.util ?? 0) - (a.util ?? 0));
+
+      // 統計
+      const max = lines.reduce((m, x) => Math.max(m, x.util ?? 0), 0);
+      document.getElementById("count").textContent = lines.length.toString();
+      document.getElementById("max").textContent = (max * 100).toFixed(1) + "%";
+
+      // テーブル描画
+      const tbody = document.querySelector("#tbl tbody");
+      tbody.innerHTML = "";
+      for (const r of lines) {
+        const tr = document.createElement("tr");
+        const utilPct = ((r.util ?? 0) * 100);
+        const utilCell = `<td class="${utilPct >= 100 ? 'warn':''}">${utilPct.toFixed(1)}</td>`;
+        tr.innerHTML = `
+          <td>${r.lineId ?? ""}</td>
+          <td>${(r.p_mw ?? 0).toLocaleString()}</td>
+          <td>${(r.capacity_mw ?? 0).toLocaleString()}</td>
+          ${utilCell}
+          <td>${r.dir ?? ""}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // 初回読み込み＋1分ごと更新
+    load().catch(err => { alert(err.message); console.error(err); });
+    setInterval(() => load().catch(console.error), 60 * 1000);
+  </script>
+</body>
+</html>
+

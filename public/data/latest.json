@@ -1,0 +1,8 @@
+{
+  "ts": "2025-08-24T12:00:00+09:00",
+  "lines": [
+    { "lineId": "K1-SubA-SubB", "p_mw": 850,  "capacity_mw": 1200, "util": 0.708, "dir": 1 },
+    { "lineId": "K2-SubC-SubD", "p_mw": -120, "capacity_mw": 400,  "util": 0.300, "dir": -1 },
+    { "lineId": "K3-SubE-SubF", "p_mw": 500,  "capacity_mw": 600,  "util": 0.833, "dir": 1 }
+  ]
+}
