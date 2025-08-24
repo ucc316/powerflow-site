@@ -8,5 +8,17 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "papaparse": "^5.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ucc316/powerflow-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ucc316/powerflow-site/issues"
+  },
+  "homepage": "https://github.com/ucc316/powerflow-site#readme",
+  "type": "module"
 }

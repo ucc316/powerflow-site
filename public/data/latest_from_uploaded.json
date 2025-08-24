@@ -1,0 +1,626 @@
+{
+  "ts": "2025-08-24T21:53:28.194747+09:00",
+  "source": {
+    "csv": "20250824214549207_地内基幹送電線潮流実績.csv",
+    "time_col": "21:30",
+    "util_basis": "abs(p)/p95 (p95=3364.0)"
+  },
+  "lines": [
+    {
+      "lineId": "安曇幹線_500kV_東京",
+      "p_mw": 1110.0,
+      "capacity_mw": 0.0,
+      "util": 0.33,
+      "dir": 1
+    },
+    {
+      "lineId": "印旛線_500kV_東京",
+      "p_mw": 1660.0,
+      "capacity_mw": 0.0,
+      "util": 0.493,
+      "dir": 1
+    },
+    {
+      "lineId": "新いわき線_500kV_東京",
+      "p_mw": 1380.0,
+      "capacity_mw": 0.0,
+      "util": 0.41,
+      "dir": 1
+    },
+    {
+      "lineId": "新岡部線_500kV_東京",
+      "p_mw": 210.0,
+      "capacity_mw": 0.0,
+      "util": 0.062,
+      "dir": 1
+    },
+    {
+      "lineId": "新京葉線_500kV_東京",
+      "p_mw": 4720.0,
+      "capacity_mw": 0.0,
+      "util": 1.2,
+      "dir": 1
+    },
+    {
+      "lineId": "新古河線_500kV_東京",
+      "p_mw": 4740.0,
+      "capacity_mw": 0.0,
+      "util": 1.2,
+      "dir": 1
+    },
+    {
+      "lineId": "新吾妻線_500kV_東京",
+      "p_mw": 140.0,
+      "capacity_mw": 0.0,
+      "util": 0.042,
+      "dir": 1
+    },
+    {
+      "lineId": "新佐原線_500kV_東京",
+      "p_mw": 3490.0,
+      "capacity_mw": 0.0,
+      "util": 1.037,
+      "dir": 1
+    },
+    {
+      "lineId": "新坂戸線_500kV_東京",
+      "p_mw": 1360.0,
+      "capacity_mw": 0.0,
+      "util": 0.404,
+      "dir": 1
+    },
+    {
+      "lineId": "新所沢線_500kV_東京",
+      "p_mw": 1340.0,
+      "capacity_mw": 0.0,
+      "util": 0.398,
+      "dir": 1
+    },
+    {
+      "lineId": "新新田線_500kV_東京",
+      "p_mw": 1800.0,
+      "capacity_mw": 0.0,
+      "util": 0.535,
+      "dir": 1
+    },
+    {
+      "lineId": "新榛名線_500kV_東京",
+      "p_mw": -20.0,
+      "capacity_mw": 0.0,
+      "util": 0.006,
+      "dir": -1
+    },
+    {
+      "lineId": "新秦野線_500kV_東京",
+      "p_mw": 480.0,
+      "capacity_mw": 0.0,
+      "util": 0.143,
+      "dir": 1
+    },
+    {
+      "lineId": "新赤城線_500kV_東京",
+      "p_mw": 720.0,
+      "capacity_mw": 0.0,
+      "util": 0.214,
+      "dir": 1
+    },
+    {
+      "lineId": "新袖ヶ浦線_500kV_東京",
+      "p_mw": 5210.0,
+      "capacity_mw": 0.0,
+      "util": 1.2,
+      "dir": 1
+    },
+    {
+      "lineId": "新多摩線_500kV_東京",
+      "p_mw": 1740.0,
+      "capacity_mw": 0.0,
+      "util": 0.517,
+      "dir": 1
+    },
+    {
+      "lineId": "新筑波線_500kV_東京",
+      "p_mw": 3520.0,
+      "capacity_mw": 0.0,
+      "util": 1.046,
+      "dir": 1
+    },
+    {
+      "lineId": "新秩父線_500kV_東京",
+      "p_mw": 1310.0,
+      "capacity_mw": 0.0,
+      "util": 0.389,
+      "dir": 1
+    },
+    {
+      "lineId": "新栃木線_500kV_東京",
+      "p_mw": 3130.0,
+      "capacity_mw": 0.0,
+      "util": 0.93,
+      "dir": 1
+    },
+    {
+      "lineId": "新豊洲線_500kV_東京",
+      "p_mw": -270.0,
+      "capacity_mw": 0.0,
+      "util": 0.08,
+      "dir": -1
+    },
+    {
+      "lineId": "新茂木線_500kV_東京",
+      "p_mw": 2210.0,
+      "capacity_mw": 0.0,
+      "util": 0.657,
+      "dir": 1
+    },
+    {
+      "lineId": "西群馬幹線_500kV_東京",
+      "p_mw": 1240.0,
+      "capacity_mw": 0.0,
+      "util": 0.369,
+      "dir": 1
+    },
+    {
+      "lineId": "西上武幹線_500kV_東京",
+      "p_mw": 190.0,
+      "capacity_mw": 0.0,
+      "util": 0.056,
+      "dir": 1
+    },
+    {
+      "lineId": "川内線_500kV_東京",
+      "p_mw": 930.0,
+      "capacity_mw": 0.0,
+      "util": 0.276,
+      "dir": 1
+    },
+    {
+      "lineId": "中栃木線_500kV_東京",
+      "p_mw": 1520.0,
+      "capacity_mw": 0.0,
+      "util": 0.452,
+      "dir": 1
+    },
+    {
+      "lineId": "東群馬幹線_500kV_東京",
+      "p_mw": 1350.0,
+      "capacity_mw": 0.0,
+      "util": 0.401,
+      "dir": 1
+    },
+    {
+      "lineId": "南いわき幹線_500kV_東京",
+      "p_mw": 2060.0,
+      "capacity_mw": 0.0,
+      "util": 0.612,
+      "dir": 1
+    },
+    {
+      "lineId": "福島幹線(山)_500kV_東京",
+      "p_mw": -220.0,
+      "capacity_mw": 0.0,
+      "util": 0.065,
+      "dir": -1
+    },
+    {
+      "lineId": "福島幹線(中)_500kV_東京",
+      "p_mw": 1100.0,
+      "capacity_mw": 0.0,
+      "util": 0.327,
+      "dir": 1
+    },
+    {
+      "lineId": "福島幹線(里)_500kV_東京",
+      "p_mw": 520.0,
+      "capacity_mw": 0.0,
+      "util": 0.155,
+      "dir": 1
+    },
+    {
+      "lineId": "福島東幹線(山)_500kV_東京",
+      "p_mw": -460.0,
+      "capacity_mw": 0.0,
+      "util": 0.137,
+      "dir": -1
+    },
+    {
+      "lineId": "福島東幹線(里)_500kV_東京",
+      "p_mw": 720.0,
+      "capacity_mw": 0.0,
+      "util": 0.214,
+      "dir": 1
+    },
+    {
+      "lineId": "房総線_500kV_東京",
+      "p_mw": 3040.0,
+      "capacity_mw": 0.0,
+      "util": 0.904,
+      "dir": 1
+    },
+    {
+      "lineId": "河北線_275kV_東京",
+      "p_mw": 2430.0,
+      "capacity_mw": 0.0,
+      "util": 0.722,
+      "dir": 1
+    },
+    {
+      "lineId": "葛南世田谷線_275kV_東京",
+      "p_mw": 730.0,
+      "capacity_mw": 0.0,
+      "util": 0.217,
+      "dir": 1
+    },
+    {
+      "lineId": "京浜線1/2L_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "京浜線3/4L_275kV_東京",
+      "p_mw": 334.0,
+      "capacity_mw": 0.0,
+      "util": 0.099,
+      "dir": 1
+    },
+    {
+      "lineId": "君津線_275kV_東京",
+      "p_mw": 560.0,
+      "capacity_mw": 0.0,
+      "util": 0.166,
+      "dir": 1
+    },
+    {
+      "lineId": "江東線_275kV_東京",
+      "p_mw": 910.0,
+      "capacity_mw": 0.0,
+      "util": 0.271,
+      "dir": 1
+    },
+    {
+      "lineId": "港北線_275kV_東京",
+      "p_mw": 1940.0,
+      "capacity_mw": 0.0,
+      "util": 0.577,
+      "dir": 1
+    },
+    {
+      "lineId": "香取線_275kV_東京",
+      "p_mw": -500.0,
+      "capacity_mw": 0.0,
+      "util": 0.149,
+      "dir": -1
+    },
+    {
+      "lineId": "高輪線_275kV_東京",
+      "p_mw": 830.0,
+      "capacity_mw": 0.0,
+      "util": 0.247,
+      "dir": 1
+    },
+    {
+      "lineId": "佐久間東幹線(中)_275kV_東京",
+      "p_mw": 350.0,
+      "capacity_mw": 0.0,
+      "util": 0.104,
+      "dir": 1
+    },
+    {
+      "lineId": "佐久間東幹線(里)_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "坂戸川越線_275kV_東京",
+      "p_mw": 1100.0,
+      "capacity_mw": 0.0,
+      "util": 0.327,
+      "dir": 1
+    },
+    {
+      "lineId": "児玉線_275kV_東京",
+      "p_mw": 340.0,
+      "capacity_mw": 0.0,
+      "util": 0.101,
+      "dir": 1
+    },
+    {
+      "lineId": "鹿島線_275kV_東京",
+      "p_mw": 1900.0,
+      "capacity_mw": 0.0,
+      "util": 0.565,
+      "dir": 1
+    },
+    {
+      "lineId": "春日部線_275kV_東京",
+      "p_mw": 520.0,
+      "capacity_mw": 0.0,
+      "util": 0.155,
+      "dir": 1
+    },
+    {
+      "lineId": "上野水道橋線_275kV_東京",
+      "p_mw": 323.0,
+      "capacity_mw": 0.0,
+      "util": 0.096,
+      "dir": 1
+    },
+    {
+      "lineId": "上野線_275kV_東京",
+      "p_mw": 605.0,
+      "capacity_mw": 0.0,
+      "util": 0.18,
+      "dir": 1
+    },
+    {
+      "lineId": "城南線_275kV_東京",
+      "p_mw": 60.0,
+      "capacity_mw": 0.0,
+      "util": 0.018,
+      "dir": 1
+    },
+    {
+      "lineId": "新座線_275kV_東京",
+      "p_mw": 1670.0,
+      "capacity_mw": 0.0,
+      "util": 0.496,
+      "dir": 1
+    },
+    {
+      "lineId": "新宿城南線_275kV_東京",
+      "p_mw": 213.0,
+      "capacity_mw": 0.0,
+      "util": 0.063,
+      "dir": 1
+    },
+    {
+      "lineId": "新宿線_275kV_東京",
+      "p_mw": 505.0,
+      "capacity_mw": 0.0,
+      "util": 0.15,
+      "dir": 1
+    },
+    {
+      "lineId": "秦浜線_275kV_東京",
+      "p_mw": 190.0,
+      "capacity_mw": 0.0,
+      "util": 0.056,
+      "dir": 1
+    },
+    {
+      "lineId": "水道橋線_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "世田谷線_275kV_東京",
+      "p_mw": 270.0,
+      "capacity_mw": 0.0,
+      "util": 0.08,
+      "dir": 1
+    },
+    {
+      "lineId": "西越谷線_275kV_東京",
+      "p_mw": 370.0,
+      "capacity_mw": 0.0,
+      "util": 0.11,
+      "dir": 1
+    },
+    {
+      "lineId": "西南川越線_275kV_東京",
+      "p_mw": 580.0,
+      "capacity_mw": 0.0,
+      "util": 0.172,
+      "dir": 1
+    },
+    {
+      "lineId": "西南多摩線_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "西北線_275kV_東京",
+      "p_mw": 1050.0,
+      "capacity_mw": 0.0,
+      "util": 0.312,
+      "dir": 1
+    },
+    {
+      "lineId": "青梅線_275kV_東京",
+      "p_mw": 720.0,
+      "capacity_mw": 0.0,
+      "util": 0.214,
+      "dir": 1
+    },
+    {
+      "lineId": "千葉印西線_275kV_東京",
+      "p_mw": 90.0,
+      "capacity_mw": 0.0,
+      "util": 0.027,
+      "dir": 1
+    },
+    {
+      "lineId": "千葉葛南線_275kV_東京",
+      "p_mw": 800.0,
+      "capacity_mw": 0.0,
+      "util": 0.238,
+      "dir": 1
+    },
+    {
+      "lineId": "中沢線_275kV_東京",
+      "p_mw": 360.0,
+      "capacity_mw": 0.0,
+      "util": 0.107,
+      "dir": 1
+    },
+    {
+      "lineId": "東京西線_275kV_東京",
+      "p_mw": 220.0,
+      "capacity_mw": 0.0,
+      "util": 0.065,
+      "dir": 1
+    },
+    {
+      "lineId": "東京中線_275kV_東京",
+      "p_mw": 680.0,
+      "capacity_mw": 0.0,
+      "util": 0.202,
+      "dir": 1
+    },
+    {
+      "lineId": "東京東線_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "東京南線1/2L_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "東京南線3/4L_275kV_東京",
+      "p_mw": -780.0,
+      "capacity_mw": 0.0,
+      "util": 0.232,
+      "dir": -1
+    },
+    {
+      "lineId": "東京北線_275kV_東京",
+      "p_mw": -100.0,
+      "capacity_mw": 0.0,
+      "util": 0.03,
+      "dir": -1
+    },
+    {
+      "lineId": "東新宿水道橋線_275kV_東京",
+      "p_mw": 0.0,
+      "capacity_mw": 0.0,
+      "util": 0.0,
+      "dir": 1
+    },
+    {
+      "lineId": "東新宿線_275kV_東京",
+      "p_mw": 180.0,
+      "capacity_mw": 0.0,
+      "util": 0.054,
+      "dir": 1
+    },
+    {
+      "lineId": "東内幸町線_275kV_東京",
+      "p_mw": 840.0,
+      "capacity_mw": 0.0,
+      "util": 0.25,
+      "dir": 1
+    },
+    {
+      "lineId": "東毛線_275kV_東京",
+      "p_mw": 390.0,
+      "capacity_mw": 0.0,
+      "util": 0.116,
+      "dir": 1
+    },
+    {
+      "lineId": "那珂線_275kV_東京",
+      "p_mw": 1670.0,
+      "capacity_mw": 0.0,
+      "util": 0.496,
+      "dir": 1
+    },
+    {
+      "lineId": "南狭山線_275kV_東京",
+      "p_mw": 2240.0,
+      "capacity_mw": 0.0,
+      "util": 0.666,
+      "dir": 1
+    },
+    {
+      "lineId": "南川崎線_275kV_東京",
+      "p_mw": -180.0,
+      "capacity_mw": 0.0,
+      "util": 0.054,
+      "dir": -1
+    },
+    {
+      "lineId": "南池上線_275kV_東京",
+      "p_mw": 400.0,
+      "capacity_mw": 0.0,
+      "util": 0.119,
+      "dir": 1
+    },
+    {
+      "lineId": "豊洲永代橋線_275kV_東京",
+      "p_mw": 250.0,
+      "capacity_mw": 0.0,
+      "util": 0.074,
+      "dir": 1
+    },
+    {
+      "lineId": "豊洲内幸町線_275kV_東京",
+      "p_mw": 230.0,
+      "capacity_mw": 0.0,
+      "util": 0.068,
+      "dir": 1
+    },
+    {
+      "lineId": "豊島線_275kV_東京",
+      "p_mw": 210.0,
+      "capacity_mw": 0.0,
+      "util": 0.062,
+      "dir": 1
+    },
+    {
+      "lineId": "北葛飾線_275kV_東京",
+      "p_mw": 1600.0,
+      "capacity_mw": 0.0,
+      "util": 0.476,
+      "dir": 1
+    },
+    {
+      "lineId": "北熊谷線_275kV_東京",
+      "p_mw": 400.0,
+      "capacity_mw": 0.0,
+      "util": 0.119,
+      "dir": 1
+    },
+    {
+      "lineId": "北千葉線_275kV_東京",
+      "p_mw": 640.0,
+      "capacity_mw": 0.0,
+      "util": 0.19,
+      "dir": 1
+    },
+    {
+      "lineId": "北武蔵野線_275kV_東京",
+      "p_mw": 540.0,
+      "capacity_mw": 0.0,
+      "util": 0.161,
+      "dir": 1
+    },
+    {
+      "lineId": "北与野線_275kV_東京",
+      "p_mw": 260.0,
+      "capacity_mw": 0.0,
+      "util": 0.077,
+      "dir": 1
+    },
+    {
+      "lineId": "墨東線_275kV_東京",
+      "p_mw": 370.0,
+      "capacity_mw": 0.0,
+      "util": 0.11,
+      "dir": 1
+    }
+  ]
+}
