@@ -1,0 +1,33 @@
+name: fetch-and-deploy
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"     # 30分ごと（UTC）。JSTで毎時00/30
+  workflow_dispatch: {}        # 手動実行ボタン
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci || npm i
+
+      - name: Build latest.json from grid-api
+        run: node scripts/fetch_from_gridapi.js
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_japan-power-grid-visualizer }}
+          channelId: live
+          projectId: <PROJECT_ID>   # 例: japan-power-grid-visualizer
