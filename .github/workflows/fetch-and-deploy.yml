@@ -1,20 +1,17 @@
 name: fetch-and-deploy
 
 on:
+  workflow_dispatch: {}
   schedule:
-    - cron: "*/30 * * * *"     # 30分ごと（UTC）。JSTで毎時00/30
-  workflow_dispatch: {}        # 手動実行ボタン
+    - cron: "*/30 * * * *"
 
 jobs:
   run:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
 
@@ -24,10 +21,21 @@ jobs:
       - name: Build latest.json from grid-api
         run: node scripts/fetch_from_gridapi.js
 
+      # ここで Secret が読めるか確認（読めなければここで止まります）
+      - name: Preflight: check FIREBASE_SERVICE_ACCOUNT
+        env:
+          FSA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          echo "HAS_SECRET=${{ secrets.FIREBASE_SERVICE_ACCOUNT != '' }}"
+          if [ -z "$FSA" ]; then
+            echo "Secret FIREBASE_SERVICE_ACCOUNT is missing"; exit 1;
+          fi
+          node -e "JSON.parse(process.env.FSA); console.log('service account JSON OK')"
+
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_japan-power-grid-visualizer }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
-          projectId: <PROJECT_ID>   # 例: japan-power-grid-visualizer
+          projectId: japan-power-grid-visualizer
